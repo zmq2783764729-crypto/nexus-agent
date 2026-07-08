@@ -1,6 +1,13 @@
-from fastapi import APIRouter, FastAPI
+from fastapi import FastAPI
 
-app = FastAPI()
+from api.router import router as api_router
+from core.config import settings
+
+
+app = FastAPI(title=settings.app_name)
+
+app.include_router(api_router, prefix="/api")
+
 
 @app.get("/health")
 async def health():
