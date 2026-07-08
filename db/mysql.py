@@ -1,6 +1,8 @@
 from core.config import settings
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession,async_sessionmaker
 from collections.abc import AsyncGenerator
+from base import Base
+import models
 
 engine = create_async_engine(
     settings.database_url,
@@ -16,7 +18,7 @@ AsyncSessionLocal = async_sessionmaker(
     expire_on_commit=False,
 )
 
-
+#FastAPI拿到数据库连接的函数
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     async with AsyncSessionLocal() as session:
         yield session
